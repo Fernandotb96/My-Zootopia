@@ -23,7 +23,7 @@ def serialization_data(animal):
     return output
 
 
-def convert_data(list_animals):
+def serialization_to_html(list_animals):
     output = ""
     for animal in list_animals:
         output += serialization_data(animal)
@@ -40,5 +40,5 @@ def replace_text_html(html_file, new_text):
 
 if __name__ == "__main__":
     animals_data = load_data('animals_data.json')
-    html_text = convert_data(animals_data)
-    replace_text_html("animals_template.html", html_text)
+    animals_html_text = serialization_to_html(animals_data)
+    replace_text_html("animals_template.html", animals_html_text)
