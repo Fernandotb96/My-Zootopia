@@ -7,20 +7,26 @@ def load_data(file_path):
         return json.load(handle)
 
 
-def serialization_animals_data(list_animals):
+def serialization_data(animal):
+    output = ""
+    output += '<li class="cards__item">'
+    output += f"<div class='card__title'>{animal['name']}</div> <br/>\n"
+    output += "<p class='card__text'>\n"
+    output += f"<strong>Diet:</strong> {animal["characteristics"]["diet"]}<br/>\n"
+    output += f"<strong>Location:</strong> {animal["locations"][0]}<br/>\n"
+    animal_type = animal["characteristics"].get("type", None)
+    if animal_type:
+        output += f"<strong>Type: </strong> {animal_type}<br/>\n"
+    output += "</p>"
+    output += "</li >"
+    output += "\n"
+    return output
+
+
+def convert_data(list_animals):
     output = ""
     for animal in list_animals:
-        output += '<li class="cards__item">'
-        output += f"<div class='card__title'>{animal['name']}</div> <br/>\n"
-        output += "<p class='card__text'>\n"
-        output += f"<strong>Diet:</strong> {animal["characteristics"]["diet"]}<br/>\n"
-        output += f"<strong>Location:</strong> {animal["locations"][0]}<br/>\n"
-        animal_type = animal["characteristics"].get("type", None)
-        if animal_type:
-            output += f"<strong>Type: </strong> {animal_type}<br/>\n"
-        output += "</p>"
-        output += "</li >"
-        output += "\n"
+        output += serialization_data(animal)
     return output
 
 
@@ -32,8 +38,7 @@ def replace_text_html(html_file, new_text):
         handle.write(html_text)
 
 
-animals_data = load_data('animals_data.json')
-
-text_pagina = serialization_animals_data(animals_data)
-
-replace_text_html("animals_template.html", text_pagina)
+if __name__ == "__main__":
+    animals_data = load_data('animals_data.json')
+    html_text = convert_data(animals_data)
+    replace_text_html("animals_template.html", html_text)
