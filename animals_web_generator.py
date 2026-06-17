@@ -10,12 +10,14 @@ def load_data(file_path):
 def get_animals_data(list_animals):
     output = ""
     for animal in list_animals:
-        output += f"Name: {animal["name"]} \n"
-        output += f"Diet: {animal["characteristics"]["diet"]} \n"
-        output += f"Location: {animal["locations"][0]} \n"
+        output += '<li class="cards__item">'
+        output += f"Name: {animal['name']}<br/>\n"
+        output += f"Diet: {animal["characteristics"]["diet"]}<br/>\n"
+        output += f"Location: {animal["locations"][0]}<br/>\n"
         animal_type = animal["characteristics"].get("type", None)
         if animal_type:
-            output += f"Type: {animal_type} \n"
+            output += f"Type: {animal_type}<br/>\n"
+        output += "</li >"
         output += "\n"
     return output
 
