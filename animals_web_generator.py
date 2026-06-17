@@ -15,16 +15,17 @@ def serialize_animal(animal):
     location = animal["locations"][0]
     animal_type = animal["characteristics"].get("type", None)
     output = f"""<li class='cards__item'>
-        <div class='card__title'>{animal['name']}</div> <br/>
-        <p class='card__text'>
-            <strong>Scientific name:</strong> {scientific_name}<br/>
-            <strong>Animal class:</strong> {animal_class}<br/>
-            <strong>Diet:</strong> {diet}<br/>
-            <strong>Location:</strong> {location}<br/>
+        <div class='card__title'>{animal['name']}</div>
+        <div class='card__text'>
+            <ul class="card__info_list">
+                <li><strong>Scientific name:</strong> {scientific_name}</li>
+                <li><strong>Animal class:</strong> {animal_class}</li>
+                <li><strong>Diet:</strong> {diet}</li>
+                <li><strong>Location:</strong> {location}</li>
         """
     if animal_type:
-        output += f"<strong>Type:</strong> {animal_type}<br/>\n"
-    output += f"    </p>\n</li>\n"
+        output += f"<li><strong>Type:</strong> {animal_type}</li>"
+    output += "</ul></div></li>"
     return output
 
 
