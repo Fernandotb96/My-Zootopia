@@ -7,17 +7,29 @@ def load_data(file_path):
         return json.load(handle)
 
 
-animals_data = load_data('animals_data.json')
-
-
-def print_animals_data(list_animals):
+def get_animals_data(list_animals):
+    output = ""
     for animal in list_animals:
-        print(f"Name: {animal["name"]}")
-        print(f"Diet: {animal["characteristics"]["diet"]}")
-        print(f"Location: {animal["locations"][0]}")
+        output += f"Name: {animal["name"]} \n"
+        output += f"Diet: {animal["characteristics"]["diet"]} \n"
+        output += f"Location: {animal["locations"][0]} \n"
         animal_type = animal["characteristics"].get("type", None)
         if animal_type:
-            print(f"Type: {animal_type}")
-        print("")
+            output += f"Type: {animal_type} \n"
+        output += "\n"
+    return output
 
 
+def replace_text_html(html_file, new_text):
+    with open(html_file, "r") as handle:
+        html_text = handle.read()
+    html_text = html_text.replace("__REPLACE_ANIMALS_INFO__", new_text)
+    with open("new.html", "w") as handle:
+        handle.write(html_text)
+
+
+animals_data = load_data('animals_data.json')
+
+text_pagina = get_animals_data(animals_data)
+
+replace_text_html("animals_template.html", text_pagina)
