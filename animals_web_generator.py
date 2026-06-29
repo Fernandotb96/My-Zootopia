@@ -38,15 +38,30 @@ def animals_to_html(list_animals):
 
 
 def replace_text_html(html_file, new_text):
-    """Replace HTML text with new HTML animal's text."""
+    """Replace HTML text with new HTML animal's text and returns the new HTML string."""
     with open(html_file, "r") as handle:
         html_text = handle.read()
     html_text = html_text.replace("__REPLACE_ANIMALS_INFO__", new_text)
-    with open("new.html", "w") as handle:
-        handle.write(html_text)
+    return html_text
+
+
+def save_text_to_html(html_text):
+    """Ask user for filename and save new HTML text into it."""
+    user_file_name = input("Enter new for the new file that ends in '.html' : ")
+    if user_file_name[-5:] == ".html":
+        with open(user_file_name, "w") as handle:
+            handle.write(html_text)
+        print("File saved successfully.")
+    else:
+        print("File not saved.")
+
+
+def main():
+    animals_data = load_data('animals_data.json')
+    animals_html_text = animals_to_html(animals_data)
+    new_html_text = replace_text_html("animals_template.html", animals_html_text)
+    save_text_to_html(new_html_text)
 
 
 if __name__ == "__main__":
-    animals_data = load_data('animals_data.json')
-    animals_html_text = animals_to_html(animals_data)
-    replace_text_html("animals_template.html", animals_html_text)
+    main()
