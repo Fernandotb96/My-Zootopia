@@ -9,11 +9,12 @@ def load_data(file_path):
 
 def serialize_animal(animal):
     """ Serializes the animal's info into an HTML <li> block."""
-    scientific_name = animal["taxonomy"]["scientific_name"]
-    animal_class = animal["taxonomy"]["class"]
-    diet = animal["characteristics"]["diet"]
-    location = animal["locations"][0]
+    scientific_name = animal["taxonomy"].get("scientific_name", None)
+    animal_class = animal["taxonomy"].get("class", None)
+    diet = animal["characteristics"].get("diet", None)
     animal_type = animal["characteristics"].get("type", None)
+    locations_list = animal.get("locations", [])
+    location = locations_list[0] if locations_list else "Unknown"
     output = f"""<li class="cards__item">
         <div class="card__title">{animal["name"]}</div>
         <div class="card__text">
